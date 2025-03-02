@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import AddBookCard from './components/AddBookCard';
+import Card from './components/Card';
+import { ISBNForm } from './components/ISBNForm/ISBNForm';
+import Modal from './components/Modal';
+import { useModal } from './hooks/useModal';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const addNewBookModal = useModal();
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <header>
+        <h1 className="font-geist text-4xl font-bold my-5 mx-auto text-center ">
+          Book Tracker
+        </h1>
+        <hr className="bg-gray-200 border-0 h-px" />
+      </header>
+      <main className="container md:mx-auto">
+        <div className="my-10 mx-auto flex flex-wrap justify-center gap-10">
+          <AddBookCard onClick={addNewBookModal.openModal} />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </div>
+      </main>
+      <Modal
+        title={'Add a new book'}
+        isOpened={addNewBookModal.isOpened}
+        onClose={addNewBookModal.closeModal}
+      >
+        <ISBNForm />
+      </Modal>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
