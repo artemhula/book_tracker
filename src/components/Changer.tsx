@@ -1,35 +1,62 @@
+import { useForm } from 'react-hook-form';
 import type { Book } from '../types/Book';
 import Button from './Button';
 import { FaMinus, FaPlus } from 'react-icons/fa6';
 import noCover from '../assets/images/no-cover.png';
-import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { changeTotalPages } from '../redux/slices/librarySlice';
+import TotalPagesChanger from './TotalPagesChanger';
+import { changeCurrentPage } from '../redux/slices/librarySlice';
+import { closeModal } from '../redux/slices/modalSlice';
 
 type ChangerProps = {
   book: Book;
 };
 
+type FormValues = {
+  currentPage: number;
+};
+
 export default function Changer({ book }: ChangerProps) {
   const dispatch = useDispatch();
-
   const {
     register,
+    setValue,
     handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
+    // formState: { errors },
+    getValues,
+  } = useForm<FormValues>({
+    defaultValues: { currentPage: book.currentPage ?? 0 },
+    mode: 'onChange',
+  });
 
-  type Inputs = {
-    pages: number;
+  const validatePages = (value: number) =>
+    value > 0 && value <= (book.totalPages ?? 0);
+
+  const handleMinusButton = () => {
+    const value = getValues('currentPage');
+    if (validatePages(value - 1)) {
+      setValue('currentPage', value - 1);
+    }
   };
 
-  const handleTotalPagesChange: SubmitHandler<Inputs> = (data) =>
-    dispatch(changeTotalPages({ isbn: book.isbn, pages: data.pages }));
+  const handlePlusButton = () => {
+    const value = getValues('currentPage');
+    if (validatePages(value + 1)) {
+      setValue('currentPage', value + 1);
+    }
+  };
+
+  const onSubmit = (data: FormValues) => {
+    dispatch(
+      changeCurrentPage({ isbn: book.isbn, currectPage: data.currentPage })
+    );
+    dispatch(closeModal());
+  };
 
   return (
     <div className="flex p-4 justify-evenly">
       <img
-        className="h-55 object-contain block "
+        className="h-55 object-contain block"
         src={book.coverURL ?? noCover}
         alt={book.title}
       />
@@ -44,65 +71,62 @@ export default function Changer({ book }: ChangerProps) {
         </div>
 
         {!book.totalPages ? (
-          <div className="font-geist text-sm text-gray-800">
-            Unfortunately, we do not have information about the number of pages
-            in this book. But you can enter it yourself.
-            <div className="mt-3">
-              {errors.pages ? (
-                <div className="font-geist text-red-500">
-                  {errors.pages.message?.toString()}
-                </div>
-              ) : (
-                <p>Please enter a count of pages</p>
-              )}
-              <input
-                id="newPages"
-                type="text"
-                inputMode="numeric"
-                pattern="\d*"
-                maxLength={4}
-                placeholder="0"
-                {...register('pages', {
-                  required: 'It is required',
-                  min: { value: 1, message: 'Minimum 1' },
-                  max: { value: 9999, message: 'Maximum 9999' },
-                  valueAsNumber: true,
-                })}
-                className="font-geist text-xl text-gray-800 mt-2 w-20 h-9 text-center m-auto border-1 border-gray-700 rounded-lg  active:border-black  caret-transparent "
-              />
-              <button
-                type="button"
-                onClick={handleSubmit(handleTotalPagesChange)}
-                className="ml-5 w-15 h-9 border-1 font-geist bg-gray-800 text-white rounded-lg -translate-y-0.5 scale-105 cursor-pointer"
-              >
-                Set
-              </button>
-            </div>
-          </div>
+          <TotalPagesChanger book={book} />
         ) : (
-          <>
-            <div className="flex flex-row items-center">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col items-center"
+          >
+            <div className="flex flex-row items-center mb-8">
               <button
                 type="button"
-                className="p-2 w-8 h-8 bg-gray-800 text-white rounded-lg"
+                onClick={handleMinusButton}
+                className="text-gray-800 text-xl cursor-pointer"
               >
                 <FaMinus />
               </button>
               <input
-                id="pages"
+                id="current"
                 type="number"
-                value={123}
-                className="font-geist font-bold text-6xl text-gray-800 w-45 m-auto text-center appearance-none outline-0 caret-transparent"
+                onInput={(e) => {
+                  const input = e.target as HTMLInputElement;
+                  if (input.value.length > 1 && input.value.startsWith('0')) {
+                    input.value = input.value.replace(/^0+/, '');
+                  }
+                  if (parseInt(input.value) > (book.totalPages ?? 1)) {
+                    input.value = book.totalPages!.toString();
+                  }
+                  if (parseInt(input.value) < 1) {
+                    input.value = '0';
+                  }
+                }}
+                {...register('currentPage', {
+                  required: 'Enter a page',
+                  min: { value: 1, message: 'Minimum 1' },
+                  max: {
+                    value: book.totalPages ?? 1,
+                    message: `Maximum ${book.totalPages}`,
+                  },
+                  valueAsNumber: true,
+                  validate: validatePages,
+                })}
+                className="font-geist font-bold text-5xl text-gray-800 w-40 m-auto text-center appearance-none outline-0"
               />
               <button
                 type="button"
-                className="p-2 w-8 h-8 bg-gray-800 text-white rounded-lg"
+                onClick={handlePlusButton}
+                className="text-gray-800 text-xl cursor-pointer"
               >
                 <FaPlus />
               </button>
             </div>
-            <Button disabled={!book} text="Track" />
-          </>
+            {/* {errors.currentPage && (
+              <p className="text-red-500 text-center mt-2">
+                {errors.currentPage.message}
+              </p>
+            )} */}
+            <Button text="Track" />
+          </form>
         )}
       </div>
     </div>

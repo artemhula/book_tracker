@@ -15,20 +15,31 @@ const librarySlice = createSlice({
     },
     changeTotalPages(
       state,
-      action: PayloadAction<{ isbn: number; pages: number }>
+      action: PayloadAction<{ isbn: number; totalPages: number }>
     ) {
-      const { isbn, pages } = action.payload;
+      const { isbn, totalPages: pages } = action.payload;
       console.log(action.payload);
       const book = state.books.find((b) => b.isbn === isbn);
       if (book) {
         book.totalPages = pages;
       }
-      console.log('ok');
+    },
+    changeCurrentPage(
+      state,
+      action: PayloadAction<{ isbn: number; currectPage: number }>
+    ) {
+      const { isbn, currectPage } = action.payload;
+      console.log(action.payload);
+      const book = state.books.find((b) => b.isbn === isbn);
+      if (book) {
+        book.currentPage = currectPage;
+      }
     },
   },
 });
 
-export const { addBook, changeTotalPages } = librarySlice.actions;
+export const { addBook, changeTotalPages, changeCurrentPage } =
+  librarySlice.actions;
 
 export const selectBooks = (state: RootState) => state.library.books;
 export const selectBookByISBN = (isbn: number | null) => (state: RootState) => {

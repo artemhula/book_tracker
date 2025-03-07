@@ -4,4 +4,5 @@ export type Book = {
   author: string;
   totalPages: number | null;
   coverURL: string | null;
+  currentPage: number | null;
 };
