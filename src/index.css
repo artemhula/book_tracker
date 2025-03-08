@@ -18,3 +18,25 @@
         margin: 0;
     }
 }
+
+@keyframes blob {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    33% {
+        transform: translateY(-20px) scale(1.3);
+    }
+
+    66% {
+        transform: translateY(20px) scale(0.8);
+    }
+}
+
+
+.animate-blob {
+    -webkit-animation: blob 7s infinite;
+    animation: blob 7s infinite;
+}

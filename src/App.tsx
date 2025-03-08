@@ -1,22 +1,26 @@
 import './App.css';
 import AddBookCard from './components/AddBookCard';
+import AnimatedBlobs from './components/AnimatedBlobs';
 import CardList from './components/CardList';
 import Modal from './components/Modal';
 
 function App() {
   return (
     <>
-      <header>
+      <header className="bg-white z-10">
         <h1 className="font-geist text-4xl font-bold my-5 mx-auto text-center ">
           Book Tracker
         </h1>
         <hr className="bg-gray-200 border-0 h-px" />
       </header>
       <main>
-        <div className="container mx-auto"></div>
-        <div className="my-10 mx-auto flex flex-wrap justify-center gap-10">
-          <AddBookCard />
-          <CardList />
+        <div className="container mx-auto relative w-full max-w-7xl">
+          <AnimatedBlobs />
+          <div className="my-10 mx-auto flex flex-wrap justify-center gap-10">
+            <AddBookCard />
+            <CardList />
+          </div>
+          <div></div>
         </div>
       </main>
       <Modal />

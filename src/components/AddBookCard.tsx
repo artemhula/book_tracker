@@ -8,7 +8,7 @@ export default function AddBookCard() {
   return (
     <div
       onClick={() => dispatch(showModal({ modalAction: 'Add' }))}
-      className="w-65 h-90 overflow-hidden shadow-sm hover:shadow-none hover:scale-105 hover:bg-gray-400 hover:cursor-pointer rounded-2xl transition duration-300 flex group"
+      className="w-65 h-90 z-10 bg-white overflow-hidden shadow-sm hover:shadow-none hover:scale-105 hover:bg-gray-400 hover:cursor-pointer rounded-2xl transition duration-300 flex group"
     >
       <div className="m-auto">
         <IoAddCircle
