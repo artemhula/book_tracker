@@ -1,8 +1,10 @@
+import { Toaster } from 'sonner';
 import './App.css';
 import AddBookCard from './components/AddBookCard';
 import AnimatedBlobs from './components/AnimatedBlobs';
 import CardList from './components/CardList';
 import Modal from './components/Modal';
+import Notifier from './components/Notifier';
 
 function App() {
   return (
@@ -22,8 +24,10 @@ function App() {
           </div>
           <div></div>
         </div>
+        <Toaster position="top-right" />
       </main>
       <Modal />
+      <Notifier />
       {/* <Changer
           {...{
             isbn: 9786171299085,
