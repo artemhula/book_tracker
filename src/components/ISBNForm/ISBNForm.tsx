@@ -81,7 +81,7 @@ export const ISBNForm = () => {
         id="isbn"
         value={formatISBN(isbn)}
         onChange={handleChange}
-        className="bg-gray-50 border mb-5 border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4"
+        className="bg-gray-50 border mb-5 border-gray-300 text-gray-900 font-geist text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4"
         placeholder="123-456-789-000-0"
         required
       />

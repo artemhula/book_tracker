@@ -3,14 +3,14 @@ import './App.css';
 import AddBookCard from './components/AddBookCard';
 import AnimatedBlobs from './components/AnimatedBlobs';
 import CardList from './components/CardList';
-import Modal from './components/Modal';
+import Modal from './components/Modal/Modal';
 import Notifier from './components/Notifier';
 
 function App() {
   return (
     <>
       <header className="bg-white z-10">
-        <h1 className="font-geist text-4xl font-bold my-5 mx-auto text-center ">
+        <h1 className="font-geist text-4xl font-bold py-6 mx-auto text-center ">
           Book Tracker
         </h1>
         <hr className="bg-gray-200 border-0 h-px" />
