@@ -27,4 +27,4 @@ export const bookAPI = createApi({
 });
 
 export default bookAPI;
-export const { useGetBookByISBNQuery } = bookAPI;
+export const { useGetBookByISBNQuery, useLazyGetBookByISBNQuery } = bookAPI;

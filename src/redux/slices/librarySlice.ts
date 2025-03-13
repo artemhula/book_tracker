@@ -17,11 +17,11 @@ const librarySlice = createSlice({
       state,
       action: PayloadAction<{ isbn: string; totalPages: number }>
     ) {
-      const { isbn, totalPages: pages } = action.payload;
+      const { isbn, totalPages } = action.payload;
       console.log(action.payload);
       const book = state.books.find((b) => b.isbn === isbn);
       if (book) {
-        book.totalPages = pages;
+        book.totalPages = totalPages;
       }
     },
     changeCurrentPage(
@@ -35,10 +35,14 @@ const librarySlice = createSlice({
         book.currentPage = currectPage;
       }
     },
+    deleteBook(state, action: PayloadAction<{ isbn: string }>) {
+      const { isbn } = action.payload;
+      state.books = state.books.filter((b) => b.isbn !== isbn);
+    },
   },
 });
 
-export const { addBook, changeTotalPages, changeCurrentPage } =
+export const { addBook, changeTotalPages, changeCurrentPage, deleteBook } =
   librarySlice.actions;
 
 export const selectBooks = (state: RootState) => state.library.books;

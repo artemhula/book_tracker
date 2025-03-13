@@ -1,7 +1,7 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { changeTotalPages } from '../redux/slices/librarySlice';
-import type { Book } from '../types/Book';
+import { changeTotalPages } from '../../redux/slices/librarySlice';
+import type { Book } from '../../types/Book';
 
 type Props = {
   book: Book;

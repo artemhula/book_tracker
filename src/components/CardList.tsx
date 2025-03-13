@@ -56,6 +56,13 @@ export default function CardList() {
               {getFilteredBooks(index).map((book) => (
                 <Card key={book.isbn} {...book} />
               ))}
+              {tab !== 'All' && getFilteredBooks(index).length === 0 && (
+                <div className="font-geist text-xl text-gray-700 mt-10 text-center">
+                  There are no such books.
+                  <br />
+                  Try to add new book!
+                </div>
+              )}
             </div>
           </TabPanel>
         ))}
