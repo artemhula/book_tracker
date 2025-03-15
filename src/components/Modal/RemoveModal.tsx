@@ -3,13 +3,14 @@ import type { Book } from '../../types/Book';
 import { setNotification } from '../../redux/slices/notifierSlice';
 import { closeModal } from '../../redux/slices/modalSlice';
 import { deleteBook } from '../../redux/slices/librarySlice';
+import type { AppDispatch } from '../../redux/store';
 
 type Props = {
   book: Book;
 };
 
 export default function RemoveModal({ book }: Props) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   return (
     <div className="font-geist text-gray-800">
@@ -19,7 +20,7 @@ export default function RemoveModal({ book }: Props) {
       <div className="flex gap-3 justify-center my-3">
         <button
           onClick={() => {
-            dispatch(deleteBook({ isbn: book.isbn }));
+            dispatch(deleteBook(book.isbn));
             dispatch(closeModal());
             dispatch(
               setNotification({

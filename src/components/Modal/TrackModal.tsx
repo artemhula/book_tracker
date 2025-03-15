@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import TotalPagesChanger from './TotalPagesChanger';
 import { changeCurrentPage } from '../../redux/slices/librarySlice';
 import { closeModal } from '../../redux/slices/modalSlice';
+import type { AppDispatch } from '../../redux/store';
 
 type ChangerProps = {
   book: Book;
@@ -17,7 +18,7 @@ type FormValues = {
 };
 
 export default function TrackModal({ book }: ChangerProps) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { register, setValue, handleSubmit, getValues } = useForm<FormValues>({
     defaultValues: { currentPage: book.currentPage ?? 0 },
     mode: 'onChange',
@@ -38,7 +39,7 @@ export default function TrackModal({ book }: ChangerProps) {
 
   const onSubmit = (data: FormValues) => {
     dispatch(
-      changeCurrentPage({ isbn: book.isbn, currectPage: data.currentPage })
+      changeCurrentPage({ isbn: book.isbn, currentPage: data.currentPage })
     );
     dispatch(closeModal());
   };
