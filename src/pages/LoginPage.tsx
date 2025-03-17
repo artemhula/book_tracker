@@ -4,7 +4,7 @@ import { ThemeSupa } from '@supabase/auth-ui-shared';
 
 export default function LoginPage() {
   return (
-    <div className="mt-50 mx-120 bg-gray-50 border-2 border-gray-100 flex gap-10 items-center justify-center rounded-lg">
+    <div className="bg-gray-50 mx-auto mt-40 border-2 border-gray-100 flex gap-10 items-center justify-center rounded-lg p-8 w-[700px]">
       <div className="text-xl font-geist w-70 h-50 p-4">
         Book Tracker is a web application for readers that helps them
         conveniently manage their personal library and track their reading
