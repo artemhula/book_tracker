@@ -3,11 +3,25 @@ import noCover from '../assets/images/no-cover.png';
 import type { Book } from '../types/Book';
 import { showModal } from '../redux/slices/modalSlice';
 import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 export default function Card(book: Book) {
   const dispatch = useDispatch();
   const [isMenuShowed, setIsMenuShowed] = useState(false);
+  const holdTimer = useRef<NodeJS.Timeout | null>(null);
+
+  const handleTouchStart = () => {
+    holdTimer.current = setTimeout(() => {
+      setIsMenuShowed(true);
+    }, 500);
+  };
+
+  const handleTouchEnd = () => {
+    if (holdTimer.current) {
+      clearTimeout(holdTimer.current);
+      holdTimer.current = null;
+    }
+  };
 
   const percentage =
     typeof book.currentPage === 'number' &&
@@ -24,6 +38,9 @@ export default function Card(book: Book) {
         dispatch(showModal({ modalAction: 'Track', selectedBook: book }))
       }
       onMouseLeave={() => setIsMenuShowed(false)}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
       className="relative group w-65 h-90 bg-white py-4 z-10 overflow-hidden shadow-sm hover:shadow-lg hover:scale-110  hover:cursor-pointer rounded-2xl transition duration-300"
     >
       <img
@@ -32,23 +49,21 @@ export default function Card(book: Book) {
         alt={book.title}
       />
       <div className="px-8 mt-3">
-        <p className="font-geist text-gray-900 font-semibold text-lg text-center truncate">
+        <p className=" text-gray-900 font-semibold text-lg text-center truncate">
           {book.title}
         </p>
-        <p className="font-geist text-gray-500 text-center truncate">
-          {book.author}
-        </p>
+        <p className=" text-gray-500 text-center truncate">{book.author}</p>
         {percentage ? (
           percentage === 100 ? (
             <>
-              <p className="font-geist text-2xl text-green-800 font-bold text-center my-2">
+              <p className="text-2xl text-green-800 font-bold text-center my-2">
                 Done
               </p>
               <div className="w-full bg-green-600 rounded-full h-2"></div>
             </>
           ) : (
             <>
-              <p className="font-geist text-2xl text-black font-bold text-center my-2">
+              <p className="text-2xl text-black font-bold text-center my-2">
                 {percentage}%
               </p>
               <div className="w-full bg-gray-200 rounded-full h-2">
@@ -61,7 +76,7 @@ export default function Card(book: Book) {
           )
         ) : (
           <>
-            <p className="font-geist text-lg text-black font-bold text-center mt-2 mb-3">
+            <p className="text-lg text-black font-bold text-center mt-2 mb-3">
               Time to start reading
             </p>
             <div className="w-full bg-gray-300 rounded-full h-2"></div>

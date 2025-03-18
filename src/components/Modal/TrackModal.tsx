@@ -45,18 +45,18 @@ export default function TrackModal({ book }: ChangerProps) {
   };
 
   return (
-    <div className="flex p-4 justify-evenly">
+    <div className="font-geist flex p-4 justify-evenly">
       <img
-        className="h-55 object-contain block"
+        className="h-40 md:h-55 object-contain block"
         src={book.coverURL ?? noCover}
         alt={book.title}
       />
       <div className="flex flex-col items-center justify-between ml-6">
         <div>
-          <p className="font-geist text-gray-900 font-semibold text-xl mb-1 text-center truncate">
+          <p className="text-gray-900 font-semibold text-xl mb-1 text-center truncate">
             {book.title}
           </p>
-          <p className="font-geist text-gray-500 text-sm text-center truncate">
+          <p className="text-gray-500 text-sm text-center truncate">
             {book.author}
           </p>
         </div>
@@ -102,7 +102,7 @@ export default function TrackModal({ book }: ChangerProps) {
                     valueAsNumber: true,
                     validate: validatePages,
                   })}
-                  className="font-geist font-bold text-5xl text-gray-800 w-40 m-auto text-center appearance-none outline-0"
+                  className="font-bold text-5xl text-gray-800 w-40 m-auto text-center appearance-none outline-0"
                 />
                 <button
                   type="button"
@@ -112,7 +112,7 @@ export default function TrackModal({ book }: ChangerProps) {
                   <FaPlus />
                 </button>
               </div>
-              <p className="font-geist text-gray-500 text-sm text-center">
+              <p className="text-gray-500 text-sm text-center">
                 Total pages: {book.totalPages}
               </p>
             </div>
