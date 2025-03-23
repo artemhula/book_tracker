@@ -1,8 +1,8 @@
-export async function apiFetch(url: string) {
+export async function apiFetch(url: string, options: RequestInit = {}) {
   const accessToken = localStorage.getItem('accessToken');
 
-  const options: RequestInit = {};
   options.headers = {
+    ...options.headers,
     Authorization: `Bearer ${accessToken}`,
     'Content-Type': 'application/json',
   };
@@ -12,7 +12,7 @@ export async function apiFetch(url: string) {
 
   if (res.status === 401) {
     const refreshRes = await fetch(
-      `${import.meta.env.VITE_API_URL}/auth/refresh`,
+      `${import.meta.env.VITE_API_URL}/login/refresh`,
       {
         method: 'POST',
         credentials: 'include',
@@ -30,7 +30,7 @@ export async function apiFetch(url: string) {
       res = await fetch(url, options);
     } else {
       localStorage.removeItem('accessToken');
-      window.location.href = '/auth';
+      window.location.href = '/login';
       throw new Error('Session expired');
     }
   }
