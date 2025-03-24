@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import noCover from '../assets/images/no-cover.png';
+import noImage from '../assets/images/no-cover.png';
 import type { Book } from '../types/Book';
 import { showModal } from '../redux/slices/modalSlice';
 import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
@@ -45,7 +45,7 @@ export default function Card(book: Book) {
     >
       <img
         className="h-52 object-contain block mx-auto"
-        src={book.coverURL ?? noCover}
+        src={book.coverUrl ?? noImage}
         alt={book.title}
       />
       <div className="px-8 mt-3">

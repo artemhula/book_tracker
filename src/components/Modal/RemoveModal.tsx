@@ -20,7 +20,7 @@ export default function RemoveModal({ book }: Props) {
       <div className="flex gap-3 justify-center my-3">
         <button
           onClick={() => {
-            dispatch(deleteBook(book.isbn));
+            dispatch(deleteBook(book.id!));
             dispatch(closeModal());
             dispatch(
               setNotification({

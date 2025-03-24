@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { Book } from '../../types/Book';
 import type { RootState } from '../store';
-import { supabase } from '../../supabaseClient';
+import { apiFetch } from '../../utils/api-fetch';
 
 type LibraryState = {
   books: Book[];
@@ -15,91 +15,89 @@ const initialState: LibraryState = {
   error: null,
 };
 
-const getUserId = (state: RootState): string => {
-  const userId = state.auth.session?.user.id;
-  if (!userId) throw new Error('No user');
-  return userId;
-};
-
 export const fetchBooks = createAsyncThunk(
   'library/fetchBooks',
-  async (_, { getState }) => {
-    const state = getState() as RootState;
-    const userId = getUserId(state);
-
-    const { data, error } = await supabase
-      .from('books')
-      .select('*')
-      .eq('user_id', userId);
-
-    if (error) throw error;
-    return data as Book[];
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await apiFetch(`${import.meta.env.VITE_API_URL}/me/books`);
+      if (!res.ok) throw new Error('Cannot fetch books');
+      return await res.json();
+    } catch (err) {
+      return rejectWithValue(err);
+    }
   }
 );
 
 export const addBook = createAsyncThunk(
   'library/addBook',
-  async (book: Book, { dispatch }) => {
-    const { error } = await supabase.from('books').insert([book]);
-    if (error) throw error;
-    await dispatch(fetchBooks());
+  async (book: Book, { dispatch, rejectWithValue }) => {
+    try {
+      const res = await apiFetch(`${import.meta.env.VITE_API_URL}/book`, {
+        method: 'POST',
+        body: JSON.stringify(book),
+      });
+      if (!res.ok) throw new Error('Failed to add new book ');
+      await dispatch(fetchBooks());
+      return await res.json();
+    } catch (err) {
+      return rejectWithValue(err);
+    }
   }
 );
 
 export const changeTotalPages = createAsyncThunk(
   'library/changeTotalPages',
   async (
-    { isbn, totalPages }: { isbn: string; totalPages: number },
-    { dispatch, getState }
+    { id, totalPages }: { id: string; totalPages: number },
+    { dispatch, rejectWithValue }
   ) => {
-    const state = getState() as RootState;
-    const userId = getUserId(state);
-
-    const { error } = await supabase
-      .from('books')
-      .update({ totalPages })
-      .eq('isbn', isbn)
-      .eq('user_id', userId);
-
-    if (error) throw error;
-    await dispatch(fetchBooks());
+    try {
+      const res = await apiFetch(`${import.meta.env.VITE_API_URL}/book/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ totalPages }),
+      });
+      if (!res.ok) throw new Error('Failed to change total pages');
+      await dispatch(fetchBooks());
+      return await res.json();
+    } catch (err) {
+      return rejectWithValue(err);
+    }
   }
 );
 
 export const changeCurrentPage = createAsyncThunk(
   'library/changeCurrentPage',
   async (
-    { isbn, currentPage }: { isbn: string; currentPage: number },
-    { dispatch, getState }
+    { id, currentPage }: { id: string; currentPage: number },
+    { dispatch, rejectWithValue }
   ) => {
-    const state = getState() as RootState;
-    const userId = getUserId(state);
-
-    const { error } = await supabase
-      .from('books')
-      .update({ currentPage })
-      .eq('isbn', isbn)
-      .eq('user_id', userId);
-
-    if (error) throw error;
-    await dispatch(fetchBooks());
+    try {
+      const res = await apiFetch(`${import.meta.env.VITE_API_URL}/book/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ currentPage }),
+      });
+      if (!res.ok) throw new Error('Failed to change current page');
+      await dispatch(fetchBooks());
+      return await res.json();
+    } catch (err) {
+      return rejectWithValue(err);
+    }
   }
 );
 
 export const deleteBook = createAsyncThunk(
   'library/deleteBook',
-  async (isbn: string, { dispatch, getState }) => {
-    const state = getState() as RootState;
-    const userId = getUserId(state);
-
-    const { error } = await supabase
-      .from('books')
-      .delete()
-      .eq('isbn', isbn)
-      .eq('user_id', userId);
-
-    if (error) throw error;
-    await dispatch(fetchBooks());
+  async (id: string, { dispatch, rejectWithValue }) => {
+    try {
+      const res = await apiFetch(`${import.meta.env.VITE_API_URL}/book/${id}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) throw new Error('Failed to delete this book');
+      await dispatch(fetchBooks());
+      return await res.json();
+    } catch (err) {
+      return rejectWithValue(err);
+    }
   }
 );
 
