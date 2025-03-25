@@ -1,7 +1,7 @@
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { changeTotalPages } from '../../redux/slices/librarySlice';
-import type { Book } from '../../types/Book';
+import type { Book } from '../../models/Book';
 import { setNotification } from '../../redux/slices/notifierSlice';
 import { closeModal } from '../../redux/slices/modalSlice';
 import type { AppDispatch } from '../../redux/store';

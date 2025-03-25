@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import type { User } from '../../types/User';
+import type { User } from '../../models/User';
 import type { RootState } from '../store';
 import { apiFetch } from '../../utils/api-fetch';
 
