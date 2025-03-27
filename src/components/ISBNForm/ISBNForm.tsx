@@ -6,7 +6,6 @@ import { HintISBN } from './ISBNHint';
 import { NotFound } from './NotFound';
 import { useDispatch, useSelector } from 'react-redux';
 import { addBook, selectBookByISBN } from '../../redux/slices/librarySlice';
-import { useGetBookCoverByISBNQuery } from '../../api/CoverService';
 import Button from '../Button';
 import { closeModal } from '../../redux/slices/modalSlice';
 import { setNotification } from '../../redux/slices/notifierSlice';
@@ -24,16 +23,8 @@ export const ISBNForm = () => {
     }
   }, [isbn]);
 
-  const { data: cover, isFetching: isCoverFetching } =
-    useGetBookCoverByISBNQuery(book?.isbn ?? '', {
-      skip: !book,
-    });
-
-  const foundBook =
-    book && !isCoverFetching ? { ...book, coverUrl: cover ?? null } : null;
-
   const existingBook = useSelector((state: RootState) =>
-    foundBook ? selectBookByISBN(state, foundBook.isbn) : null
+    book ? selectBookByISBN(state, book.isbn) : null
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +34,7 @@ export const ISBNForm = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!foundBook) {
+    if (!book) {
       return dispatch(
         setNotification({
           type: 'Warning',
@@ -62,7 +53,7 @@ export const ISBNForm = () => {
     }
 
     dispatch(closeModal());
-    dispatch(addBook(foundBook));
+    dispatch(addBook(book));
     dispatch(
       setNotification({
         type: 'Success',
@@ -90,16 +81,16 @@ export const ISBNForm = () => {
       <div className="bg-gray-50 mb-5 border border-gray-400 w-full h-25 rounded-lg p-4 flex">
         {isbn.length < 13 ? (
           <HintISBN />
-        ) : isLoading || isCoverFetching ? (
+        ) : isLoading ? (
           <LoadingSpinner />
-        ) : foundBook ? (
-          <FoundBook {...foundBook} />
+        ) : book ? (
+          <FoundBook {...book} />
         ) : (
           <NotFound />
         )}
       </div>
       <div className="flex flex-row justify-end">
-        <Button disabled={!foundBook} text="Add" />
+        <Button disabled={!book} text="Add" />
       </div>
     </form>
   );

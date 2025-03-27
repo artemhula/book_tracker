@@ -45,3 +45,7 @@
     -webkit-animation: blob 7s infinite;
     animation: blob 7s infinite;
 }
+
+svg.recharts-surface {
+    outline: 0;
+}

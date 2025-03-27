@@ -1,4 +1,4 @@
 export type Statistic = {
   totalPages: number;
-  pagesPerDay: Record<string, number>;
+  pagesPerDays: Record<string, number>;
 };

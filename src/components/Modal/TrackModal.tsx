@@ -47,16 +47,16 @@ export default function TrackModal({ book }: ChangerProps) {
   return (
     <div className="font-geist flex p-2 md:p-4 justify-center md:justify-evenly">
       <img
-        className="w-35 md:w-45 object-contain block"
+        className="h-45 md:h-60 w-30 object-contain block"
         src={book.coverUrl ?? noCover}
         alt={book.title}
       />
-      <div className="flex flex-col items-center justify-between ml-3 md:ml-6">
-        <div>
-          <p className="text-gray-900 font-semibold text-xl mb-1 text-center truncate">
+      <div className="flex flex-col items-center justify-between ml-3 md:ml-6 min-w-0 flex-1">
+        <div className="w-full min-w-0">
+          <p className="text-gray-900 font-semibold text-lg mb-1 text-center truncate ">
             {book.title}
           </p>
-          <p className="text-gray-500 text-sm text-center truncate">
+          <p className="text-gray-500 text-sm text-center truncate w-full">
             {book.author}
           </p>
         </div>
@@ -66,7 +66,7 @@ export default function TrackModal({ book }: ChangerProps) {
         ) : (
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col items-center"
+            className="flex flex-col items-center mt-3"
           >
             <div className="mb-6">
               <div className="flex flex-row items-center mb-2">
