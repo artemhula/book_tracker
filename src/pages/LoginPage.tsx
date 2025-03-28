@@ -1,3 +1,4 @@
+import { AnimatedBlobs } from '../components/AnimatedBlobs';
 import { Header } from '../components/Header';
 import Modal from '../components/Modal/Modal';
 
@@ -10,7 +11,7 @@ export default function LoginPage() {
     <>
       <Header showUserBar={false} showHomeButton={false} />
       <main className="font-geist">
-        <div className="bg-gray-50 mx-auto mt-40 border-2 border-gray-100 flex flex-col lg:flex-row gap-3 lg-gap-5 items-center justify-center rounded-lg p-4 lg:p-8 w-[300px] lg:w-[700px]">
+        <div className="bg-white mx-auto mt-40 border-2 border-gray-50 flex flex-col lg:flex-row gap-3 lg-gap-5 items-center justify-center rounded-lg p-4 lg:p-8 w-[300px] lg:w-[700px]">
           <div className="text-xl w-70 h-50 p-4">
             Book Tracker is a web application for readers that helps them
             conveniently manage their personal library and track their reading
@@ -34,6 +35,7 @@ export default function LoginPage() {
           </div>
         </div>
       </main>
+      <AnimatedBlobs />
       <Modal />
     </>
   );

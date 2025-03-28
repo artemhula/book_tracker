@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import AnimatedBlobs from '../components/AnimatedBlobs';
+import { useEffect, useMemo, useState } from 'react';
+import { AnimatedBlobs } from '../components/AnimatedBlobs';
 import { Header } from '../components/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectBooks } from '../redux/slices/librarySlice';
@@ -21,7 +21,11 @@ export default function StatsPage() {
   const isLoading = useSelector(selectStatsLoading);
 
   const [selectedOption, setSelectedOption] = useState('all');
-  const options: Option[] = [{ id: 'all', title: 'All books' }, ...books];
+
+  const options: Option[] = useMemo(
+    () => [{ id: 'all', title: 'All books' }, ...books],
+    [books]
+  );
 
   useEffect(() => {
     const bookId = selectedOption === 'all' ? undefined : selectedOption;
@@ -35,7 +39,6 @@ export default function StatsPage() {
   return (
     <>
       <Header />
-
       <main className="font-geist mx-5 md:mx-20">
         <Selector
           options={options}
