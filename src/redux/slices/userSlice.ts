@@ -3,7 +3,12 @@ import type { User } from '../../models/User';
 import type { RootState } from '../store';
 import { apiFetch } from '../../utils/api-fetch';
 
-const initialState = {
+interface UserState {
+  user: User | null;
+  loading: boolean;
+}
+
+const initialState: UserState = {
   user: null,
   loading: false,
 };
