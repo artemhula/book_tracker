@@ -1,21 +1,29 @@
-export default class BookService {
-  static async getBookByISBN(isbn: string) {
-    const res = await fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${
-        import.meta.env.VITE_GOOGLE_BOOKS_API_KEY
-      }`
-    );
-    const json = await res.json();
-    if (!json.items || !json.items.length) return null;
-    const data = json.items[0]?.volumeInfo;
-    if (!data) return null;
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import type { Book } from '../types/Book';
+const apiKey = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 
-    return {
-      isbn: parseInt(isbn),
-      title: data.title,
-      author: data.authors[0] ?? '',
-      pages: data.pageCount,
-      coverURL: data.imageLinks?.thumbnail ?? null,
-    };
-  }
-}
+export const bookAPI = createApi({
+  reducerPath: 'bookAPI',
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://www.googleapis.com/books/v1/',
+  }),
+  endpoints: (build) => ({
+    getBookByISBN: build.query<Book | null, string>({
+      query: (isbn) => `volumes?q=isbn:${isbn}&key=${apiKey}`,
+      transformResponse: (response: any, _, isbn): Book | null => {
+        if (!response.items?.length) return null;
+        const volumeInfo = response.items[0].volumeInfo;
+        return {
+          isbn: parseInt(isbn),
+          title: volumeInfo.title,
+          author: volumeInfo.authors?.join(', '),
+          pages: volumeInfo.pageCount || null,
+          coverURL: null,
+        };
+      },
+    }),
+  }),
+});
+
+export default bookAPI;
+export const { useGetBookByISBNQuery } = bookAPI;

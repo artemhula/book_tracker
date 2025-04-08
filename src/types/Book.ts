@@ -3,5 +3,5 @@ export type Book = {
   title: string;
   author: string;
   pages: number;
-  coverURL: string;
+  coverURL: string | null;
 };
