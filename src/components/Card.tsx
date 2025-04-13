@@ -20,7 +20,7 @@ export default function Card(book: Book) {
       onClick={() =>
         dispatch(showModal({ modalAction: 'Track', selectedBook: book }))
       }
-      className="w-65 h-90 bg-white py-4 overflow-hidden shadow-sm hover:shadow-lg hover:scale-110  hover:cursor-pointer rounded-2xl transition duration-300"
+      className="w-65 h-90 bg-white py-4 z-10 overflow-hidden shadow-sm hover:shadow-lg hover:scale-110  hover:cursor-pointer rounded-2xl transition duration-300"
     >
       <img
         className="h-52 object-contain block mx-auto"
