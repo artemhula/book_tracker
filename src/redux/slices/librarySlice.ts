@@ -15,7 +15,7 @@ const librarySlice = createSlice({
     },
     changeTotalPages(
       state,
-      action: PayloadAction<{ isbn: number; totalPages: number }>
+      action: PayloadAction<{ isbn: string; totalPages: number }>
     ) {
       const { isbn, totalPages: pages } = action.payload;
       console.log(action.payload);
@@ -26,7 +26,7 @@ const librarySlice = createSlice({
     },
     changeCurrentPage(
       state,
-      action: PayloadAction<{ isbn: number; currectPage: number }>
+      action: PayloadAction<{ isbn: string; currectPage: number }>
     ) {
       const { isbn, currectPage } = action.payload;
       console.log(action.payload);
@@ -42,6 +42,6 @@ export const { addBook, changeTotalPages, changeCurrentPage } =
   librarySlice.actions;
 
 export const selectBooks = (state: RootState) => state.library.books;
-export const selectBookByISBN = (state: RootState, isbn: number | null) =>
+export const selectBookByISBN = (state: RootState, isbn: string | null) =>
   state.library.books.find((b) => b.isbn === isbn);
 export default librarySlice.reducer;

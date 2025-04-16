@@ -14,7 +14,7 @@ export const bookAPI = createApi({
         if (!response.items?.length) return null;
         const volumeInfo = response.items[0].volumeInfo;
         return {
-          isbn: parseInt(isbn),
+          isbn: isbn,
           title: volumeInfo.title,
           author: volumeInfo.authors?.join(', '),
           totalPages: volumeInfo.pageCount || null,
