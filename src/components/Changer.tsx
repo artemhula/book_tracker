@@ -22,7 +22,7 @@ export default function Changer({ book }: ChangerProps) {
     register,
     setValue,
     handleSubmit,
-    // formState: { errors },
+    formState: { errors },
     getValues,
   } = useForm<FormValues>({
     defaultValues: { currentPage: book.currentPage ?? 0 },
@@ -34,16 +34,12 @@ export default function Changer({ book }: ChangerProps) {
 
   const handleMinusButton = () => {
     const value = getValues('currentPage');
-    if (validatePages(value - 1)) {
-      setValue('currentPage', value - 1);
-    }
+    if (validatePages(value - 1)) setValue('currentPage', value - 1);
   };
 
   const handlePlusButton = () => {
     const value = getValues('currentPage');
-    if (validatePages(value + 1)) {
-      setValue('currentPage', value + 1);
-    }
+    if (validatePages(value + 1)) setValue('currentPage', value + 1);
   };
 
   const onSubmit = (data: FormValues) => {
@@ -77,54 +73,54 @@ export default function Changer({ book }: ChangerProps) {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col items-center"
           >
-            <div className="flex flex-row items-center mb-8">
-              <button
-                type="button"
-                onClick={handleMinusButton}
-                className="text-gray-800 text-xl cursor-pointer"
-              >
-                <FaMinus />
-              </button>
-              <input
-                id="current"
-                type="number"
-                onInput={(e) => {
-                  const input = e.target as HTMLInputElement;
-                  if (input.value.length > 1 && input.value.startsWith('0')) {
-                    input.value = input.value.replace(/^0+/, '');
-                  }
-                  if (parseInt(input.value) > (book.totalPages ?? 1)) {
-                    input.value = book.totalPages!.toString();
-                  }
-                  if (parseInt(input.value) < 1) {
-                    input.value = '0';
-                  }
-                }}
-                {...register('currentPage', {
-                  required: 'Enter a page',
-                  min: { value: 1, message: 'Minimum 1' },
-                  max: {
-                    value: book.totalPages ?? 1,
-                    message: `Maximum ${book.totalPages}`,
-                  },
-                  valueAsNumber: true,
-                  validate: validatePages,
-                })}
-                className="font-geist font-bold text-5xl text-gray-800 w-40 m-auto text-center appearance-none outline-0"
-              />
-              <button
-                type="button"
-                onClick={handlePlusButton}
-                className="text-gray-800 text-xl cursor-pointer"
-              >
-                <FaPlus />
-              </button>
-            </div>
-            {/* {errors.currentPage && (
-              <p className="text-red-500 text-center mt-2">
-                {errors.currentPage.message}
+            <div className="mb-6">
+              <div className="flex flex-row items-center mb-2">
+                <button
+                  type="button"
+                  onClick={handleMinusButton}
+                  className="text-gray-800 text-xl cursor-pointer"
+                >
+                  <FaMinus />
+                </button>
+                <input
+                  id="current"
+                  type="number"
+                  onInput={(e) => {
+                    const input = e.target as HTMLInputElement;
+                    if (input.value.length > 1 && input.value.startsWith('0')) {
+                      input.value = input.value.replace(/^0+/, '');
+                    }
+                    if (parseInt(input.value) > (book.totalPages ?? 1)) {
+                      input.value = book.totalPages!.toString();
+                    }
+                    if (parseInt(input.value) < 1) {
+                      input.value = '0';
+                    }
+                  }}
+                  {...register('currentPage', {
+                    required: 'Enter a page',
+                    min: { value: 1, message: 'Minimum 1' },
+                    max: {
+                      value: book.totalPages ?? 1,
+                      message: `Maximum ${book.totalPages}`,
+                    },
+                    valueAsNumber: true,
+                    validate: validatePages,
+                  })}
+                  className="font-geist font-bold text-5xl text-gray-800 w-40 m-auto text-center appearance-none outline-0"
+                />
+                <button
+                  type="button"
+                  onClick={handlePlusButton}
+                  className="text-gray-800 text-xl cursor-pointer"
+                >
+                  <FaPlus />
+                </button>
+              </div>
+              <p className="font-geist text-gray-500 text-sm text-center">
+                Total pages: {book.totalPages}
               </p>
-            )} */}
+            </div>
             <Button text="Track" />
           </form>
         )}

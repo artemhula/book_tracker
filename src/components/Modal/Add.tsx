@@ -12,9 +12,13 @@ export default function Add() {
       <TabList className="flex flex-row gap-3 font-geist mb-5">
         {tabs.map((tab, index) => (
           <Tab
-            className={`${
-              index === tabIndex ? 'bg-gray-900 text-white ' : ''
-            } border-gray-900 border-2 rounded-lg px-3 py-0.5 transition-colors duration-300 cursor-pointer`}
+            className={`px-4 py-1 rounded-lg border-2 transition-colors duration-200 cursor-pointer
+                ${
+                  index === tabIndex
+                    ? 'bg-gray-900 text-white border-gray-900 shadow'
+                    : 'bg-white text-gray-900 border-gray-300 hover:bg-gray-100'
+                }
+                `}
           >
             {tab}
           </Tab>
