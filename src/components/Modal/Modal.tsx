@@ -2,9 +2,11 @@ import { IoMdClose } from 'react-icons/io';
 import { useDispatch, useSelector } from 'react-redux';
 import type { RootState } from '../../redux/store';
 import { closeModal } from '../../redux/slices/modalSlice';
-import Changer from '../Changer';
 import { selectBookByISBN } from '../../redux/slices/librarySlice';
-import Add from './Add';
+import AddModal from './AddModal';
+import TrackModal from './TrackModal';
+import ChangeModal from './ChangeModal';
+import RemoveModal from './RemoveModal';
 
 export default function Modal() {
   const { isOpened, modalAction, selectedBook } = useSelector(
@@ -19,7 +21,7 @@ export default function Modal() {
   return (
     <div className="fixed inset-0 backdrop-opacity-50 backdrop-blur-xl bg-black/60 flex items-center justify-center z-50 duration-200">
       <div
-        className="relative w-lg h-[450px] bg-white rounded-lg
+        className="relative w-lg max-h-[450px] bg-white rounded-lg
        "
       >
         <div className="flex items-center justify-between p-5 border-b border-gray-200">
@@ -36,9 +38,13 @@ export default function Modal() {
         </div>
         <div className="p-5 m-auto">
           {modalAction === 'Add' ? (
-            <Add />
+            <AddModal />
           ) : modalAction === 'Track' && book ? (
-            <Changer book={book} />
+            <TrackModal book={book} />
+          ) : modalAction === 'Change' && book ? (
+            <ChangeModal book={book} />
+          ) : modalAction === 'Delete' && book ? (
+            <RemoveModal book={book} />
           ) : null}
         </div>
       </div>

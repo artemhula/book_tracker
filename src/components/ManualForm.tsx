@@ -63,7 +63,7 @@ export default function ManualForm() {
         >
           Adding a book manually
         </label>
-        <div className="mt-4 flex flex-col l h-full justify-between">
+        <div className="mt-4 flex flex-col h-full justify-between">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="font-geist">Title</p>
@@ -132,7 +132,7 @@ export default function ManualForm() {
               />
             </div>
           </div>
-          <div className="flex flex-row justify-end">
+          <div className="flex flex-row justify-end mt-9">
             <Button text="Add" />
           </div>
         </div>

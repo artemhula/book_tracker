@@ -8,6 +8,7 @@ const coverAPI = createApi({
     getBookCoverByISBN: build.query<string | null, string>({
       query: (isbn: string) => `bookcover/${isbn}`,
       transformResponse: (res) => res.url ?? null,
+      keepUnusedDataFor: 0,
     }),
   }),
 });

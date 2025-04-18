@@ -5,7 +5,7 @@ import ManualForm from '../ManualForm';
 
 const tabs = ['By ISBN', 'Manually'];
 
-export default function Add() {
+export default function AddModal() {
   const [tabIndex, setTabIndex] = useState(0);
   return (
     <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>

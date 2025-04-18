@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useGetBookByISBNQuery } from '../../api/BookService';
+import React, { useEffect, useState } from 'react';
+import { useLazyGetBookByISBNQuery } from '../../api/BookService';
 import { FindedBook } from './FindedBook';
 import { LoadingSpinner } from './LoadingSpinner';
 import { HintISBN } from './ISBNHint';
@@ -15,16 +15,23 @@ import type { RootState } from '../../redux/store';
 export const ISBNForm = () => {
   const [isbn, setIsbn] = useState('');
   const dispatch = useDispatch();
-  const { data: book, isLoading } = useGetBookByISBNQuery(isbn, {
-    skip: isbn.length !== 13,
-  });
-  const { data: cover } = useGetBookCoverByISBNQuery(isbn, {
-    skip: !book,
-  });
-  const findedBook = book ? { ...book, coverURL: cover ?? null } : null;
+  const [trigger, { data: book, isLoading }] = useLazyGetBookByISBNQuery();
+
+  useEffect(() => {
+    if (isbn.length === 13) trigger(isbn);
+  }, [isbn]);
+
+  const { data: cover, isLoading: coverIsLoading } = useGetBookCoverByISBNQuery(
+    book?.isbn ?? '',
+    {
+      skip: !book,
+    }
+  );
+
+  const foundBook = book ? { ...book, coverURL: cover ?? null } : null;
 
   const existingBook = useSelector((state: RootState) =>
-    findedBook ? selectBookByISBN(state, findedBook.isbn) : null
+    foundBook ? selectBookByISBN(state, foundBook.isbn) : null
   );
 
   const formatISBN = (value: string) =>
@@ -41,10 +48,10 @@ export const ISBNForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (findedBook) {
+    if (foundBook) {
       if (!existingBook) {
         dispatch(closeModal());
-        dispatch(addBook(findedBook));
+        dispatch(addBook(foundBook));
         dispatch(
           setNotification({
             type: 'Success',
@@ -90,8 +97,8 @@ export const ISBNForm = () => {
           <HintISBN />
         ) : isLoading ? (
           <LoadingSpinner />
-        ) : findedBook ? (
-          <FindedBook {...findedBook} />
+        ) : foundBook ? (
+          <FindedBook {...foundBook} />
         ) : (
           <NotFound />
         )}
