@@ -1,11 +1,31 @@
 import { Toaster } from 'sonner';
 import './App.css';
-import AnimatedBlobs from './components/AnimatedBlobs';
-import CardList from './components/CardList';
 import Modal from './components/Modal/Modal';
 import Notifier from './components/Notifier';
+import { useEffect, useState } from 'react';
+import { supabase } from './supabaseClient';
+import type { Session } from '@supabase/auth-js';
+import LoginPage from './pages/LoginPage';
+import LibraryPage from './pages/LibraryPage';
 
-function App() {
+export default function App() {
+  const [session, setSession] = useState<Session | null>(null);
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    console.log(session);
+  }, [session]);
+
   return (
     <>
       <header className="bg-white z-10">
@@ -15,10 +35,7 @@ function App() {
         <hr className="bg-gray-200 border-0 h-px" />
       </header>
       <main>
-        <div className="container mx-auto relative w-full max-w-7xl">
-          <AnimatedBlobs />
-          <CardList />
-        </div>
+        {session ? <LibraryPage /> : <LoginPage />}
         <Toaster position="top-right" />
       </main>
       <Modal />
@@ -26,5 +43,3 @@ function App() {
     </>
   );
 }
-
-export default App;
