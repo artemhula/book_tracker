@@ -10,11 +10,11 @@ import { useGetBookCoverByISBNQuery } from '../../api/CoverService';
 import Button from '../Button';
 import { closeModal } from '../../redux/slices/modalSlice';
 import { setNotification } from '../../redux/slices/notifierSlice';
-import type { RootState } from '../../redux/store';
+import type { AppDispatch, RootState } from '../../redux/store';
 
 export const ISBNForm = () => {
   const [isbn, setIsbn] = useState('');
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [trigger, { data: book, isLoading }] = useLazyGetBookByISBNQuery();
 
   useEffect(() => {
@@ -52,6 +52,7 @@ export const ISBNForm = () => {
       if (!existingBook) {
         dispatch(closeModal());
         dispatch(addBook(foundBook));
+
         dispatch(
           setNotification({
             type: 'Success',

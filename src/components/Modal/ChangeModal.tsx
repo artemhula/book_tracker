@@ -4,6 +4,7 @@ import { changeTotalPages } from '../../redux/slices/librarySlice';
 import type { Book } from '../../types/Book';
 import { setNotification } from '../../redux/slices/notifierSlice';
 import { closeModal } from '../../redux/slices/modalSlice';
+import type { AppDispatch } from '../../redux/store';
 
 type Props = {
   book: Book;
@@ -14,7 +15,7 @@ type Inputs = {
 };
 
 export default function ChangeModal({ book }: Props) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const {
     register,
     handleSubmit,
