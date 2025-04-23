@@ -12,16 +12,16 @@ export default function App() {
 
   return (
     <>
-      <header className="bg-white z-10 relative flex items-center justify-center">
-        <h1 className="font-geist text-4xl font-bold py-6 text-center w-full">
+      <header className="font-geist bg-white z-10 relative flex items-center justify-center">
+        <h1 className="text-3xl lg:text-4xl font-bold py-6 text-center w-full">
           Book Tracker
         </h1>
-        <div className="absolute right-8 top-1/2 -translate-y-1/2">
+        <div className="absolute right-4 lg:right-8 top-1/2 -translate-y-1/2">
           {session?.user && <UserBar />}
         </div>
         <hr className="bg-gray-200 border-0 h-px absolute bottom-0 left-0 w-full" />
       </header>
-      <main>
+      <main className="font-geist">
         {session ? <LibraryPage /> : <LoginPage />}
         <Toaster position="top-right" />
       </main>
