@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import authReducer from './slices/authSlice';
+import userReducer from './slices/userSlice';
 import libraryReducer from './slices/librarySlice';
 import modalReducer from './slices/modalSlice';
 import notifierReducer from './slices/notifierSlice';
@@ -14,7 +14,7 @@ const libraryPersistConfig = {
 };
 
 const rootReducer = combineReducers({
-  auth: authReducer,
+  user: userReducer,
   library: persistReducer(libraryPersistConfig, libraryReducer),
   modal: modalReducer,
   notifier: notifierReducer,
