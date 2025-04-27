@@ -5,7 +5,6 @@ import { fetchUser } from '../redux/slices/userSlice';
 import type { AppDispatch } from '../redux/store';
 
 export default function LoginRedirectPage() {
-  const { search } = useLocation();
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
