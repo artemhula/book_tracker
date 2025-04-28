@@ -25,7 +25,12 @@ export const signOut = createAsyncThunk(
   'user/signOut',
   async (_, { rejectWithValue }) => {
     try {
-      const res = await apiFetch(`${import.meta.env.VITE_API_URL}/auth/logout`);
+      const res = await apiFetch(
+        `${import.meta.env.VITE_API_URL}/auth/logout`,
+        {
+          method: 'POST',
+        }
+      );
       if (!res.ok) throw new Error('Failed to logout');
       localStorage.removeItem('accessToken');
       return await res.json;
@@ -51,6 +56,10 @@ const userSlice = createSlice({
       .addCase(fetchUser.rejected, (state) => {
         state.user = null;
         state.loading = false;
+      })
+      .addCase(signOut.fulfilled, (state) => {
+        state.user = null;
+        state.loading = true;
       });
   },
 });

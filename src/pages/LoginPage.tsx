@@ -1,3 +1,4 @@
+import { Header } from '../components/Header';
 import Modal from '../components/Modal/Modal';
 import Notifier from '../components/Notifier';
 
@@ -8,13 +9,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <header className="font-geist bg-white z-10 relative flex items-center justify-center">
-        <h1 className="text-3xl lg:text-4xl font-bold py-6 text-center w-full">
-          Book Tracker
-        </h1>
-        <hr className="bg-gray-200 border-0 h-px absolute bottom-0 left-0 w-full" />
-      </header>
-
+      <Header userBarActive={false} />
       <main className="font-geist">
         <div className="bg-gray-50 mx-auto mt-40 border-2 border-gray-100 flex flex-col lg:flex-row gap-3 lg-gap-5 items-center justify-center rounded-lg p-4 lg:p-8 w-[300px] lg:w-[700px]">
           <div className="text-xl w-70 h-50 p-4">
