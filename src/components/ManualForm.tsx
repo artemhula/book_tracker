@@ -28,7 +28,7 @@ export default function ManualForm() {
   const onSubmit = (bookData: ManualFormValues) => {
     const book = books.find((b) => b.isbn === bookData.isbn);
     if (!book) {
-      dispatch(addBook({ ...bookData, coverURL: null, currentPage: null }));
+      dispatch(addBook({ ...bookData, coverUrl: null, currentPage: null }));
       dispatch(closeModal());
       dispatch(
         setNotification({ type: 'Success', text: 'Book was added succesfully' })

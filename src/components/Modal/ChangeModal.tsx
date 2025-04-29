@@ -38,7 +38,7 @@ export default function ChangeModal({ book }: Props) {
         })
       );
     } else {
-      dispatch(changeTotalPages({ isbn: book.isbn, totalPages: data.pages }));
+      dispatch(changeTotalPages({ id: book.id!, totalPages: data.pages }));
       dispatch(closeModal());
       dispatch(
         setNotification({

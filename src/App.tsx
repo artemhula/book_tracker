@@ -3,6 +3,7 @@ import LibraryPage from './pages/LibraryPage';
 import LoginRedirectPage from './pages/LoginRedirectPage';
 import LoginPage from './pages/LoginPage';
 import ProtectedLayout from './components/ProtectedLayout';
+import StatsPage from './pages/StatsPage';
 
 export default function App() {
   return (
@@ -13,6 +14,9 @@ export default function App() {
       <Route path="login">
         <Route index element={<LoginPage />} />
         <Route path="callback" element={<LoginRedirectPage />} />
+      </Route>
+      <Route path="stats" element={<ProtectedLayout />}>
+        <Route index element={<StatsPage />} />
       </Route>
     </Routes>
   );

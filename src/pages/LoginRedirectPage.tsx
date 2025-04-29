@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { fetchUser } from '../redux/slices/userSlice';
 import type { AppDispatch } from '../redux/store';
 
@@ -19,7 +19,7 @@ export default function LoginRedirectPage() {
           navigate('/');
         });
     }
-  }, [location, dispatch, navigate]);
+  }, []);
 
   return (
     <div className="w-full h-200 flex items-center justify-center">
