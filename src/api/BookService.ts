@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { Book } from '../types/Book';
+import type { Book } from '../models/Book';
 const apiKey = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY;
 
 export const bookAPI = createApi({

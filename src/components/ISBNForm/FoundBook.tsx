@@ -1,5 +1,5 @@
 import noImage from '../../assets/images/no-cover.png';
-import type { Book } from '../../types/Book';
+import type { Book } from '../../models/Book';
 
 export const FoundBook = (book: Book) => {
   return (

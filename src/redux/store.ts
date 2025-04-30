@@ -3,18 +3,19 @@ import userReducer from './slices/userSlice';
 import libraryReducer from './slices/librarySlice';
 import modalReducer from './slices/modalSlice';
 import notifierReducer from './slices/notifierSlice';
+import statsReducer from './slices/statsSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import bookAPI from '../api/BookService';
 import coverAPI from '../api/CoverService';
 
-const libraryPersistConfig = {
-  key: 'library',
+const userPersistConfig = {
+  key: 'user',
   storage,
 };
 
-const userPersistConfig = {
-  key: 'user',
+const libraryPersistConfig = {
+  key: 'library',
   storage,
 };
 
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   library: persistReducer(libraryPersistConfig, libraryReducer),
   modal: modalReducer,
   notifier: notifierReducer,
+  stats: statsReducer,
   [bookAPI.reducerPath]: bookAPI.reducer,
   [coverAPI.reducerPath]: coverAPI.reducer,
 });
