@@ -1,31 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import BookService from '../../api/BookService';
-import { useFetching } from '../../hooks/useFetching';
+import React, { useState } from 'react';
+import { useGetBookByISBNQuery } from '../../api/BookService';
 import { FindedBook } from './FindedBook';
 import { LoadingSpinner } from './LoadingSpinner';
 import { HintISBN } from './ISBNHint';
-import type { Book } from '../../types/Book';
 import { NotFound } from './NotFound';
+import { useDispatch } from 'react-redux';
+import { addBook } from '../../redux/slices/librarySlice';
+import { useGetBookCoverByISBNQuery } from '../../api/CoverService';
 
-export const ISBNForm = () => {
+type ISBNFormProps = {
+  onSuccess: () => void;
+};
+
+export const ISBNForm = ({ onSuccess }: ISBNFormProps) => {
   const [isbn, setIsbn] = useState('');
-  const [book, setBook] = useState<Book | null>(null);
-  const [fetchBook, isLoading, error] = useFetching(async () => {
-    const findedBook = await BookService.getBookByISBN(isbn);
-    if (findedBook) {
-      setBook(findedBook);
-    }
-    console.log(findedBook);
+  const dispatch = useDispatch();
+  const { data: book, isLoading } = useGetBookByISBNQuery(isbn, {
+    skip: isbn.length !== 13,
   });
-
-  useEffect(() => {
-    if (isbn.length === 13) {
-      fetchBook();
-    }
-    if (isbn.length != 13 && book) {
-      setBook(null);
-    }
-  }, [isbn]);
+  const { data: cover } = useGetBookCoverByISBNQuery(isbn, {
+    skip: !book,
+  });
+  const findedBook = book ? { ...book, coverURL: cover ?? null } : null;
 
   const formatISBN = (value: string) =>
     value
@@ -39,8 +35,10 @@ export const ISBNForm = () => {
     setIsbn(raw);
   };
 
-  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (findedBook) dispatch(addBook(findedBook));
+    onSuccess();
   };
 
   return (
@@ -59,21 +57,22 @@ export const ISBNForm = () => {
         placeholder="123-456-789-000-0"
         required
       />
-      <div className="bg-gray-50 mb-8 border border-gray-400 w-full h-25 rounded-lg p-4 flex">
+      <div className="bg-gray-50 mb-5 border border-gray-400 w-full h-25 rounded-lg p-4 flex">
         {isbn.length < 13 ? (
           <HintISBN />
         ) : isLoading ? (
           <LoadingSpinner />
-        ) : book ? (
-          <FindedBook {...book} />
+        ) : findedBook ? (
+          <FindedBook {...findedBook} />
         ) : (
           <NotFound />
         )}
       </div>
-      <div className="flex-row items-end">
+      <div className="flex flex-row justify-end">
         <button
           type="submit"
           className="px-4 py-2 w-25 bg-gray-900 text-white rounded-lg"
+          disabled={!book}
         >
           Add
         </button>
