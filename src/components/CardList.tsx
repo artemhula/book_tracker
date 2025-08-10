@@ -4,6 +4,7 @@ import Card from './Card';
 
 export default function CardList() {
   const books = useSelector(selectBooks);
+  console.log(books);
 
   return (
     <>

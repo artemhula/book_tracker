@@ -1,18 +1,30 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import libraryReducer from './slices/librarySlice';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import bookAPI from '../api/BookService';
 import coverAPI from '../api/CoverService';
 
+const libraryPersistConfig = {
+  key: 'library',
+  storage,
+};
+
+const rootReducer = combineReducers({
+  library: persistReducer(libraryPersistConfig, libraryReducer),
+  [bookAPI.reducerPath]: bookAPI.reducer,
+  [coverAPI.reducerPath]: coverAPI.reducer,
+});
+
 const store = configureStore({
-  reducer: {
-    library: libraryReducer,
-    [bookAPI.reducerPath]: bookAPI.reducer,
-    [coverAPI.reducerPath]: coverAPI.reducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(bookAPI.middleware, coverAPI.middleware),
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(bookAPI.middleware, coverAPI.middleware),
 });
 
 export default store;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export const persistor = persistStore(store);
