@@ -1,13 +1,13 @@
 import { IoAddCircle } from 'react-icons/io5';
+import { useDispatch } from 'react-redux';
+import { showModal } from '../redux/slices/modalSlice';
 
-type AddBookCardProps = {
-  onClick: () => void;
-};
+export default function AddBookCard() {
+  const dispatch = useDispatch();
 
-export default function AddBookCard({ onClick }: AddBookCardProps) {
   return (
     <div
-      onClick={onClick}
+      onClick={() => dispatch(showModal({ modalAction: 'Add' }))}
       className="w-65 h-90 overflow-hidden shadow-sm hover:shadow-none hover:scale-105 hover:bg-gray-400 hover:cursor-pointer rounded-2xl transition duration-300 flex group"
     >
       <div className="m-auto">

@@ -1,13 +1,9 @@
 import './App.css';
 import AddBookCard from './components/AddBookCard';
 import CardList from './components/CardList';
-import { ISBNForm } from './components/ISBNForm/ISBNForm';
 import Modal from './components/Modal';
-import { useModal } from './hooks/useModal';
 
 function App() {
-  const addNewBookModal = useModal();
-
   return (
     <>
       <header>
@@ -19,17 +15,21 @@ function App() {
       <main>
         <div className="container mx-auto"></div>
         <div className="my-10 mx-auto flex flex-wrap justify-center gap-10">
-          <AddBookCard onClick={addNewBookModal.openModal} />
+          <AddBookCard />
           <CardList />
         </div>
       </main>
-      <Modal
-        title={'Add a new book'}
-        isOpened={addNewBookModal.isOpened}
-        onClose={addNewBookModal.closeModal}
-      >
-        <ISBNForm onSuccess={addNewBookModal.closeModal} />
-      </Modal>
+      <Modal />
+      {/* <Changer
+          {...{
+            isbn: 9786171299085,
+            title: 'Бійцівський клуб',
+            author: 'Чак Поланік',
+            pages: 0,
+            coverURL:
+              'https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1677866602i/123171738.jpg',
+          }}
+        /> */}
     </>
   );
 }

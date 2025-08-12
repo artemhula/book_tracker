@@ -7,12 +7,10 @@ import { NotFound } from './NotFound';
 import { useDispatch } from 'react-redux';
 import { addBook } from '../../redux/slices/librarySlice';
 import { useGetBookCoverByISBNQuery } from '../../api/CoverService';
+import Button from '../Button';
+import { closeModal } from '../../redux/slices/modalSlice';
 
-type ISBNFormProps = {
-  onSuccess: () => void;
-};
-
-export const ISBNForm = ({ onSuccess }: ISBNFormProps) => {
+export const ISBNForm = () => {
   const [isbn, setIsbn] = useState('');
   const dispatch = useDispatch();
   const { data: book, isLoading } = useGetBookByISBNQuery(isbn, {
@@ -38,7 +36,7 @@ export const ISBNForm = ({ onSuccess }: ISBNFormProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (findedBook) dispatch(addBook(findedBook));
-    onSuccess();
+    dispatch(closeModal());
   };
 
   return (
@@ -69,13 +67,7 @@ export const ISBNForm = ({ onSuccess }: ISBNFormProps) => {
         )}
       </div>
       <div className="flex flex-row justify-end">
-        <button
-          type="submit"
-          className="px-4 py-2 w-25 bg-gray-900 text-white rounded-lg"
-          disabled={!book}
-        >
-          Add
-        </button>
+        <Button disabled={!book} text="Add" />
       </div>
     </form>
   );
