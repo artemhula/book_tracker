@@ -19,6 +19,7 @@ export const bookAPI = createApi({
           author: volumeInfo.authors?.join(', '),
           totalPages: volumeInfo.pageCount || null,
           coverURL: null,
+          currentPage: null,
         };
       },
     }),

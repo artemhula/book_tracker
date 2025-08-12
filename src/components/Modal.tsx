@@ -7,11 +7,9 @@ import Changer from './Changer';
 import { selectBookByISBN } from '../redux/slices/librarySlice';
 
 export default function Modal() {
-  const {
-    isOpened,
-    modalAction: action,
-    selectedBook,
-  } = useSelector((state: RootState) => state.modal);
+  const { isOpened, modalAction, selectedBook } = useSelector(
+    (state: RootState) => state.modal
+  );
   const dispatch = useDispatch();
   const book = useSelector(selectBookByISBN(selectedBook?.isbn ?? null));
   if (!isOpened) return null;
@@ -24,7 +22,7 @@ export default function Modal() {
       >
         <div className="flex items-center justify-between p-5 border-b border-gray-200">
           <h3 className="text-2xl font-geist font-bold text-gray-900 ">
-            Title
+            {modalAction}
           </h3>
           <button
             onClick={() => dispatch(closeModal())}
@@ -35,9 +33,9 @@ export default function Modal() {
           </button>
         </div>
         <div className="p-5">
-          {action === 'Add' ? (
+          {modalAction === 'Add' ? (
             <ISBNForm />
-          ) : action === 'Track' && book ? (
+          ) : modalAction === 'Track' && book ? (
             <Changer book={book} />
           ) : null}
         </div>

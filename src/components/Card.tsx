@@ -5,6 +5,16 @@ import { showModal } from '../redux/slices/modalSlice';
 
 export default function Card(book: Book) {
   const dispatch = useDispatch();
+
+  const percentage =
+    typeof book.currentPage === 'number' &&
+    typeof book.totalPages === 'number' &&
+    book.totalPages > 0
+      ? book.currentPage >= book.totalPages
+        ? 100
+        : Math.max(1, Math.floor((book.currentPage / book.totalPages) * 100))
+      : null;
+
   return (
     <div
       onClick={() =>
@@ -24,12 +34,35 @@ export default function Card(book: Book) {
         <p className="font-geist text-gray-500 text-center truncate">
           {book.author}
         </p>
-        <p className="font-geist text-2xl text-black font-bold text-center my-2">
-          78%
-        </p>
-        <div className="w-full bg-gray-200 rounded-full h-2">
-          <div className="bg-blue-400 h-2 rounded-full w-45"></div>
-        </div>
+        {percentage ? (
+          percentage === 100 ? (
+            <>
+              <p className="font-geist text-2xl text-green-800 font-bold text-center my-2">
+                Done
+              </p>
+              <div className="w-full bg-green-600 rounded-full h-2"></div>
+            </>
+          ) : (
+            <>
+              <p className="font-geist text-2xl text-black font-bold text-center my-2">
+                {percentage}%
+              </p>
+              <div className="w-full bg-gray-200 rounded-full h-2">
+                <div
+                  className={`bg-blue-400 h-2 rounded-full`}
+                  style={{ width: `${percentage}%` }}
+                ></div>
+              </div>
+            </>
+          )
+        ) : (
+          <>
+            <p className="font-geist text-lg text-black font-bold text-center mt-2 mb-3">
+              Time to start reading
+            </p>
+            <div className="w-full bg-gray-300 rounded-full h-2"></div>
+          </>
+        )}
       </div>
     </div>
   );
