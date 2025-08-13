@@ -17,7 +17,7 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    showModal(state, action) {
+    showModal(_, action) {
       return {
         isOpened: true,
         modalAction: action.payload.modalAction,

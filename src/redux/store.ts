@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import libraryReducer from './slices/librarySlice';
 import modalReducer from './slices/modalSlice';
+import notifierReducer from './slices/notifierSlice';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import bookAPI from '../api/BookService';
@@ -14,6 +15,7 @@ const libraryPersistConfig = {
 const rootReducer = combineReducers({
   library: persistReducer(libraryPersistConfig, libraryReducer),
   modal: modalReducer,
+  notifier: notifierReducer,
   [bookAPI.reducerPath]: bookAPI.reducer,
   [coverAPI.reducerPath]: coverAPI.reducer,
 });

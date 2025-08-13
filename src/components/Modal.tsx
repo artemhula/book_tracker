@@ -11,7 +11,9 @@ export default function Modal() {
     (state: RootState) => state.modal
   );
   const dispatch = useDispatch();
-  const book = useSelector(selectBookByISBN(selectedBook?.isbn ?? null));
+  const book = useSelector((state: RootState) =>
+    selectBookByISBN(state, selectedBook?.isbn ?? null)
+  );
   if (!isOpened) return null;
 
   return (

@@ -42,8 +42,6 @@ export const { addBook, changeTotalPages, changeCurrentPage } =
   librarySlice.actions;
 
 export const selectBooks = (state: RootState) => state.library.books;
-export const selectBookByISBN = (isbn: number | null) => (state: RootState) => {
-  if (isbn) return state.library.books.find((b) => b.isbn === isbn);
-  return null;
-};
+export const selectBookByISBN = (state: RootState, isbn: number | null) =>
+  state.library.books.find((b) => b.isbn === isbn);
 export default librarySlice.reducer;

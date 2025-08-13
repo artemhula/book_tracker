@@ -4,11 +4,13 @@ import { FindedBook } from './FindedBook';
 import { LoadingSpinner } from './LoadingSpinner';
 import { HintISBN } from './ISBNHint';
 import { NotFound } from './NotFound';
-import { useDispatch } from 'react-redux';
-import { addBook } from '../../redux/slices/librarySlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addBook, selectBookByISBN } from '../../redux/slices/librarySlice';
 import { useGetBookCoverByISBNQuery } from '../../api/CoverService';
 import Button from '../Button';
 import { closeModal } from '../../redux/slices/modalSlice';
+import { setNotification } from '../../redux/slices/notifierSlice';
+import type { RootState } from '../../redux/store';
 
 export const ISBNForm = () => {
   const [isbn, setIsbn] = useState('');
@@ -20,6 +22,10 @@ export const ISBNForm = () => {
     skip: !book,
   });
   const findedBook = book ? { ...book, coverURL: cover ?? null } : null;
+
+  const existingBook = useSelector((state: RootState) =>
+    findedBook ? selectBookByISBN(state, findedBook.isbn) : null
+  );
 
   const formatISBN = (value: string) =>
     value
@@ -35,8 +41,32 @@ export const ISBNForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (findedBook) dispatch(addBook(findedBook));
-    dispatch(closeModal());
+    if (findedBook) {
+      if (!existingBook) {
+        dispatch(closeModal());
+        dispatch(addBook(findedBook));
+        dispatch(
+          setNotification({
+            type: 'Success',
+            text: 'Book has been successfully added',
+          })
+        );
+      } else {
+        dispatch(
+          setNotification({
+            type: 'Warning',
+            text: 'This book has already been added',
+          })
+        );
+      }
+    } else {
+      dispatch(
+        setNotification({
+          type: 'Warning',
+          text: 'Please, find a book to add',
+        })
+      );
+    }
   };
 
   return (
