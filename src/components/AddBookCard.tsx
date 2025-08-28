@@ -8,7 +8,7 @@ export default function AddBookCard() {
   return (
     <div
       onClick={() => dispatch(showModal({ modalAction: 'Add' }))}
-      className="w-65 h-90 z-10 bg-white overflow-hidden shadow-sm hover:shadow-none hover:scale-105 hover:bg-gray-400 hover:cursor-pointer rounded-2xl transition duration-300 flex group"
+      className="w-65 h-90 z-10 bg-white overflow-hidden shadow-sm hover:shadow-none hover:scale-105 hover:bg-gray-500 hover:opacity-60 hover:cursor-pointer rounded-2xl transition duration-300 flex group"
     >
       <div className="m-auto">
         <IoAddCircle
@@ -16,7 +16,7 @@ export default function AddBookCard() {
           size={120}
         />
         <div className="px-6 py-4">
-          <div className="font-geist text-gray-700 font-semibold text-xl mb-1 text-center group-hover:text-white transition-colors">
+          <div className="font-geist text-gray-700 font-semibold text-xl mb-1 text-center group-hover:text-white group-hover:opactiy-20 transition-colors">
             Add new book
           </div>
         </div>
