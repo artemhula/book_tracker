@@ -19,7 +19,7 @@ export default function Modal() {
   return (
     <div className="fixed inset-0 backdrop-opacity-50 backdrop-blur-xl bg-black/60 flex items-center justify-center z-50 duration-200">
       <div
-        className="relative w-full max-w-lg max-h-full h-[450px] bg-white rounded-lg shadow-
+        className="relative w-lg h-[450px] bg-white rounded-lg
        "
       >
         <div className="flex items-center justify-between p-5 border-b border-gray-200">
@@ -34,7 +34,7 @@ export default function Modal() {
             <IoMdClose size={32} className="text-gray-900 m-auto" />
           </button>
         </div>
-        <div className="p-5">
+        <div className="p-5 m-auto">
           {modalAction === 'Add' ? (
             <Add />
           ) : modalAction === 'Track' && book ? (
