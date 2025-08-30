@@ -1,12 +1,12 @@
 import { useForm } from 'react-hook-form';
-import type { Book } from '../types/Book';
-import Button from './Button';
+import type { Book } from '../../types/Book';
+import Button from './../Button';
 import { FaMinus, FaPlus } from 'react-icons/fa6';
-import noCover from '../assets/images/no-cover.png';
+import noCover from '../../assets/images/no-cover.png';
 import { useDispatch } from 'react-redux';
 import TotalPagesChanger from './TotalPagesChanger';
-import { changeCurrentPage } from '../redux/slices/librarySlice';
-import { closeModal } from '../redux/slices/modalSlice';
+import { changeCurrentPage } from '../../redux/slices/librarySlice';
+import { closeModal } from '../../redux/slices/modalSlice';
 
 type ChangerProps = {
   book: Book;
@@ -16,15 +16,9 @@ type FormValues = {
   currentPage: number;
 };
 
-export default function Changer({ book }: ChangerProps) {
+export default function TrackModal({ book }: ChangerProps) {
   const dispatch = useDispatch();
-  const {
-    register,
-    setValue,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-  } = useForm<FormValues>({
+  const { register, setValue, handleSubmit, getValues } = useForm<FormValues>({
     defaultValues: { currentPage: book.currentPage ?? 0 },
     mode: 'onChange',
   });
