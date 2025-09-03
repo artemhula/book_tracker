@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from './Button';
 import { addBook, selectBooks } from '../redux/slices/librarySlice';
 import { closeModal } from '../redux/slices/modalSlice';
+import type { AppDispatch } from '../redux/store';
 
 type ManualFormValues = {
   title: string;
@@ -14,7 +15,7 @@ type ManualFormValues = {
 };
 
 export default function ManualForm() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const {
     register,

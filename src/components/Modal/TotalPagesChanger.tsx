@@ -2,6 +2,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { changeTotalPages } from '../../redux/slices/librarySlice';
 import type { Book } from '../../types/Book';
+import type { AppDispatch } from '../../redux/store';
 
 type Props = {
   book: Book;
@@ -12,7 +13,7 @@ type Inputs = {
 };
 
 export default function TotalPagesChanger({ book }: Props) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const {
     register,
     handleSubmit,

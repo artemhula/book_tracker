@@ -1,15 +1,25 @@
-import { useSelector } from 'react-redux';
-import { selectBooks } from '../redux/slices/librarySlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchBooks, selectBooks } from '../redux/slices/librarySlice';
 import Card from './Card';
 import AddBookCard from './AddBookCard';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { selectUser } from '../redux/slices/authSlice';
+import type { AppDispatch } from '../redux/store';
 
 const tabs = ['All', 'In progress', 'Unopened', 'Completed'];
 
 export default function CardList() {
   const books = useSelector(selectBooks);
+  const user = useSelector(selectUser);
   const [tabIndex, setTabIndex] = useState(0);
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (user?.id) {
+      dispatch(fetchBooks());
+    }
+  }, [user, dispatch]);
 
   const getFilteredBooks = (index: number) => {
     switch (index) {
