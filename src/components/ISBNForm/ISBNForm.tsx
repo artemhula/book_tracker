@@ -21,12 +21,9 @@ export const ISBNForm = () => {
     if (isbn.length === 13) trigger(isbn);
   }, [isbn]);
 
-  const { data: cover, isLoading: coverIsLoading } = useGetBookCoverByISBNQuery(
-    book?.isbn ?? '',
-    {
-      skip: !book,
-    }
-  );
+  const { data: cover } = useGetBookCoverByISBNQuery(book?.isbn ?? '', {
+    skip: !book,
+  });
 
   const foundBook = book ? { ...book, coverURL: cover ?? null } : null;
 

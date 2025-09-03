@@ -7,7 +7,7 @@ const coverAPI = createApi({
   endpoints: (build) => ({
     getBookCoverByISBN: build.query<string | null, string>({
       query: (isbn: string) => `bookcover/${isbn}`,
-      transformResponse: (res) => res.url ?? null,
+      transformResponse: (res) => (res as { url?: string }).url ?? null,
       keepUnusedDataFor: 0,
     }),
   }),
