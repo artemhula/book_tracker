@@ -4,7 +4,7 @@ import Card from './Card';
 import AddBookCard from './AddBookCard';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { useEffect, useState } from 'react';
-import { selectUser } from '../redux/slices/authSlice';
+import { selectUser } from '../redux/slices/userSlice';
 import type { AppDispatch } from '../redux/store';
 
 const tabs = ['All', 'In progress', 'Unopened', 'Completed'];
