@@ -1,13 +1,12 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  type PayloadAction,
-} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { User } from '../../types/User';
 import type { RootState } from '../store';
 import { apiFetch } from '../../utils/api-fetch';
 
-const initialState: User | null = null;
+const initialState = {
+  user: null,
+  loading: false,
+};
 
 export const fetchUser = createAsyncThunk(
   'user/fetchUser',
@@ -22,23 +21,41 @@ export const fetchUser = createAsyncThunk(
   }
 );
 
+export const signOut = createAsyncThunk(
+  'user/signOut',
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await apiFetch(`${import.meta.env.VITE_API_URL}/auth/logout`);
+      if (!res.ok) throw new Error('Failed to logout');
+      localStorage.removeItem('accessToken');
+      return await res.json;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {
-    setUser: (state, action: PayloadAction<User | null>) => {
-      return action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(
-        fetchUser.fulfilled,
-        (_, action: PayloadAction<User>) => action.payload as User
-      )
-      .addCase(fetchUser.rejected, () => null);
+      .addCase(fetchUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchUser.rejected, (state) => {
+        state.user = null;
+        state.loading = false;
+      });
   },
 });
 
+export const selectUser = (state: RootState): User | null => state.user.user;
+export const selectUserLoading = (state: RootState) => state.user.loading;
+
 export default userSlice.reducer;
-export const selectUser = (state: RootState) => state.user;

@@ -1,16 +1,32 @@
-// ProtectedLayout.jsx
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchUser,
+  selectUser,
+  selectUserLoading,
+} from '../redux/slices/userSlice';
 import { Outlet, Navigate } from 'react-router';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../redux/slices/userSlice';
+import type { AppDispatch } from '../redux/store';
+import { LoadingSpinner } from './LoadingSpinner';
 
-const ProtectedLayout = () => {
+export default function ProtectedLayout() {
+  const dispatch = useDispatch<AppDispatch>();
   const user = useSelector(selectUser);
+  const loading = useSelector(selectUserLoading);
+
+  useEffect(() => {
+    if (localStorage.getItem('accessToken')) {
+      dispatch(fetchUser());
+    }
+  }, [dispatch]);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
 
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
   return <Outlet />;
-};
-
-export default ProtectedLayout;
+}

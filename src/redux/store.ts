@@ -13,8 +13,13 @@ const libraryPersistConfig = {
   storage,
 };
 
+const userPersistConfig = {
+  key: 'user',
+  storage,
+};
+
 const rootReducer = combineReducers({
-  user: userReducer,
+  user: persistReducer(userPersistConfig, userReducer),
   library: persistReducer(libraryPersistConfig, libraryReducer),
   modal: modalReducer,
   notifier: notifierReducer,
