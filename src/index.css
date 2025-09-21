@@ -3,11 +3,16 @@
     src: url(../src/assets/fonts/Geist-VariableFont_wght.ttf);
 }
 
+@font-face {
+    font-family: ZalandoSansExpanded;
+    src: url(../src/assets/fonts/ZalandoSansExpanded-VariableFont_wght.ttf);
+}
 
 @import "tailwindcss";
 
 @theme {
-    --font-geist: Geist, "sans-serif"
+    --font-geist: Geist, "sans-serif";
+    --font-zalando: ZalandoSansExpanded, "sans-serif"
 }
 
 @layer base {
