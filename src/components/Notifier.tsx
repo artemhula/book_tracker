@@ -16,8 +16,6 @@ export default function Notifier() {
       case 'Error':
         toast.error(notification.text);
         break;
-      default:
-        break;
     }
   }, [notification]);
 

@@ -5,6 +5,6 @@ export type Book = {
   title: string;
   author: string;
   totalPages: number | null;
-  coverURL: string | null;
+  coverUrl: string | null;
   currentPage: number | null;
 };

@@ -21,7 +21,7 @@ export default function Modal() {
   return (
     <div className="fixed inset-0 backdrop-opacity-50 backdrop-blur-xl bg-black/60 flex items-center justify-center z-50 duration-200">
       <div
-        className="relative w-lg max-h-[450px] bg-white rounded-lg
+        className="relative w-[500px] max-h-[450px] bg-white rounded-lg
        "
       >
         <div className="flex items-center justify-between p-5 border-b border-gray-200">

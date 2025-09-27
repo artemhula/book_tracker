@@ -39,19 +39,19 @@ export default function TrackModal({ book }: ChangerProps) {
 
   const onSubmit = (data: FormValues) => {
     dispatch(
-      changeCurrentPage({ isbn: book.isbn, currentPage: data.currentPage })
+      changeCurrentPage({ id: book.id!, currentPage: data.currentPage })
     );
     dispatch(closeModal());
   };
 
   return (
-    <div className="font-geist flex p-4 justify-evenly">
+    <div className="font-geist flex p-2 md:p-4 justify-center md:justify-evenly">
       <img
-        className="h-40 md:h-55 object-contain block"
-        src={book.coverURL ?? noCover}
+        className="w-35 md:w-45 object-contain block"
+        src={book.coverUrl ?? noCover}
         alt={book.title}
       />
-      <div className="flex flex-col items-center justify-between ml-6">
+      <div className="flex flex-col items-center justify-between ml-3 md:ml-6">
         <div>
           <p className="text-gray-900 font-semibold text-xl mb-1 text-center truncate">
             {book.title}
@@ -102,7 +102,7 @@ export default function TrackModal({ book }: ChangerProps) {
                     valueAsNumber: true,
                     validate: validatePages,
                   })}
-                  className="font-bold text-5xl text-gray-800 w-40 m-auto text-center appearance-none outline-0"
+                  className="font-bold text-4xl md:text-5xl text-gray-800 w-30 md:w-40 m-auto text-center appearance-none outline-0"
                 />
                 <button
                   type="button"

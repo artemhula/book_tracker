@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLazyGetBookByISBNQuery } from '../../api/BookService';
-import { FindedBook } from './FindedBook';
+import { FoundBook } from './FoundBook';
 import { LoadingSpinner } from './LoadingSpinner';
 import { HintISBN } from './ISBNHint';
 import { NotFound } from './NotFound';
@@ -11,6 +11,7 @@ import Button from '../Button';
 import { closeModal } from '../../redux/slices/modalSlice';
 import { setNotification } from '../../redux/slices/notifierSlice';
 import type { AppDispatch, RootState } from '../../redux/store';
+import { formatISBN, sanitizeISBN } from '../../utils/isbn';
 
 export const ISBNForm = () => {
   const [isbn, setIsbn] = useState('');
@@ -18,60 +19,56 @@ export const ISBNForm = () => {
   const [trigger, { data: book, isLoading }] = useLazyGetBookByISBNQuery();
 
   useEffect(() => {
-    if (isbn.length === 13) trigger(isbn);
+    if (isbn.length === 13) {
+      trigger(isbn);
+    }
   }, [isbn]);
 
-  const { data: cover } = useGetBookCoverByISBNQuery(book?.isbn ?? '', {
-    skip: !book,
-  });
+  const { data: cover, isFetching: isCoverFetching } =
+    useGetBookCoverByISBNQuery(book?.isbn ?? '', {
+      skip: !book,
+    });
 
-  const foundBook = book ? { ...book, coverURL: cover ?? null } : null;
+  const foundBook =
+    book && !isCoverFetching ? { ...book, coverUrl: cover ?? null } : null;
 
   const existingBook = useSelector((state: RootState) =>
     foundBook ? selectBookByISBN(state, foundBook.isbn) : null
   );
 
-  const formatISBN = (value: string) =>
-    value
-      .replace(/\D/g, '')
-      .slice(0, 13)
-      .match(/.{1,3}/g)
-      ?.join('-') ?? '';
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const raw = e.target.value.replace(/-/g, '').slice(0, 13);
-    setIsbn(raw);
+    setIsbn(sanitizeISBN(e.target.value));
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (foundBook) {
-      if (!existingBook) {
-        dispatch(closeModal());
-        dispatch(addBook(foundBook));
 
-        dispatch(
-          setNotification({
-            type: 'Success',
-            text: 'Book has been successfully added',
-          })
-        );
-      } else {
-        dispatch(
-          setNotification({
-            type: 'Warning',
-            text: 'This book has already been added',
-          })
-        );
-      }
-    } else {
-      dispatch(
+    if (!foundBook) {
+      return dispatch(
         setNotification({
           type: 'Warning',
           text: 'Please, find a book to add',
         })
       );
     }
+
+    if (existingBook) {
+      return dispatch(
+        setNotification({
+          type: 'Warning',
+          text: 'This book has already been added',
+        })
+      );
+    }
+
+    dispatch(closeModal());
+    dispatch(addBook(foundBook));
+    dispatch(
+      setNotification({
+        type: 'Success',
+        text: 'Book has been successfully added',
+      })
+    );
   };
 
   return (
@@ -93,16 +90,16 @@ export const ISBNForm = () => {
       <div className="bg-gray-50 mb-5 border border-gray-400 w-full h-25 rounded-lg p-4 flex">
         {isbn.length < 13 ? (
           <HintISBN />
-        ) : isLoading ? (
+        ) : isLoading || isCoverFetching ? (
           <LoadingSpinner />
         ) : foundBook ? (
-          <FindedBook {...foundBook} />
+          <FoundBook {...foundBook} />
         ) : (
           <NotFound />
         )}
       </div>
       <div className="flex flex-row justify-end">
-        <Button disabled={!book} text="Add" />
+        <Button disabled={!foundBook} text="Add" />
       </div>
     </form>
   );

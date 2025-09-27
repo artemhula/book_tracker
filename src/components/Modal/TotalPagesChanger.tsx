@@ -21,7 +21,7 @@ export default function TotalPagesChanger({ book }: Props) {
   } = useForm<Inputs>();
 
   const handleTotalPagesChange: SubmitHandler<Inputs> = (data) =>
-    dispatch(changeTotalPages({ isbn: book.isbn, totalPages: data.pages }));
+    dispatch(changeTotalPages({ id: book.id!, totalPages: data.pages }));
 
   return (
     <div className="font-geist text-sm text-gray-800">

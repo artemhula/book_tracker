@@ -1,11 +1,11 @@
 import noImage from '../../assets/images/no-cover.png';
 import type { Book } from '../../types/Book';
 
-export const FindedBook = (book: Book) => {
+export const FoundBook = (book: Book) => {
   return (
     <>
       <img
-        src={book.coverURL ?? noImage}
+        src={book.coverUrl ?? noImage}
         alt={book.title}
         className="w-12 h-16 mr-3 object-contain"
       />
