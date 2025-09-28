@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import noImage from '../assets/images/no-cover.png';
-import type { Book } from '../types/Book';
+import type { Book } from '../models/Book';
 import { showModal } from '../redux/slices/modalSlice';
 import { IoEllipsisHorizontalSharp } from 'react-icons/io5';
 import { useRef, useState } from 'react';

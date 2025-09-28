@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import type { Book } from '../../types/Book';
+import type { Book } from '../../models/Book';
 import { setNotification } from '../../redux/slices/notifierSlice';
 import { closeModal } from '../../redux/slices/modalSlice';
 import { deleteBook } from '../../redux/slices/librarySlice';

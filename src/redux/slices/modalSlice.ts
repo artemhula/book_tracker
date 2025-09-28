@@ -1,6 +1,7 @@
-import type { Book } from '../../types/Book';
-import type { ModalAction } from '../../types/ModalAction';
+import type { Book } from '../../models/Book';
 import { createSlice } from '@reduxjs/toolkit';
+
+export type ModalAction = 'Add' | 'Delete' | 'Change' | 'Track';
 
 export type ModalState = {
   isOpened: boolean;

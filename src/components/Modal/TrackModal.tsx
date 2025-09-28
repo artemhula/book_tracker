@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import type { Book } from '../../types/Book';
+import type { Book } from '../../models/Book';
 import Button from './../Button';
 import { FaMinus, FaPlus } from 'react-icons/fa6';
 import noCover from '../../assets/images/no-cover.png';

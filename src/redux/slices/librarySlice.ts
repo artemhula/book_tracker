@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import type { Book } from '../../types/Book';
+import type { Book } from '../../models/Book';
 import type { RootState } from '../store';
 import { apiFetch } from '../../utils/api-fetch';
 
