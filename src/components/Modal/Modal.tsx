@@ -7,6 +7,7 @@ import AddModal from './AddModal';
 import TrackModal from './TrackModal';
 import ChangeModal from './ChangeModal';
 import RemoveModal from './RemoveModal';
+import { useEffect } from 'react';
 
 export default function Modal() {
   const { isOpened, modalAction, selectedBook } = useSelector(
@@ -16,12 +17,22 @@ export default function Modal() {
   const book = useSelector((state: RootState) =>
     selectBookByISBN(state, selectedBook?.isbn ?? null)
   );
+
+  useEffect(() => {
+    if (isOpened) {
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.documentElement.style.overflow = 'auto';
+      };
+    }
+  }, [isOpened]);
+
   if (!isOpened) return null;
 
   return (
     <div className="fixed inset-0 backdrop-opacity-50 backdrop-blur-xl bg-black/60 flex items-center justify-center z-50 duration-200">
       <div
-        className="relative w-[500px] max-h-[450px] bg-white rounded-lg
+        className="relative w-90 md:w-120 max-h-112 bg-white rounded-lg
        "
       >
         <div className="flex items-center justify-between p-5 border-b border-gray-200">

@@ -24,9 +24,8 @@ export default function TotalPagesChanger({ book }: Props) {
     dispatch(changeTotalPages({ id: book.id!, totalPages: data.pages }));
 
   return (
-    <div className="font-geist text-sm text-gray-800">
-      Unfortunately, we do not have information about the number of pages in
-      this book. But you can enter it yourself.
+    <div className="font-geist mt-2 text-sm text-gray-800 text-center">
+      We do not have information about the number of pages in this book.
       <form
         className="mt-3 flex items-center"
         onSubmit={handleSubmit(handleTotalPagesChange)}
@@ -37,7 +36,7 @@ export default function TotalPagesChanger({ book }: Props) {
               {errors.pages.message?.toString()}
             </div>
           ) : (
-            <p>Please enter a count of pages</p>
+            <p>Enter a count of pages</p>
           )}
           <input
             id="newPages"

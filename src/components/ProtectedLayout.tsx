@@ -21,7 +21,11 @@ export default function ProtectedLayout() {
   }, [dispatch]);
 
   if (loading) {
-    return <LoadingSpinner />;
+    return (
+      <div className="grid min-h-[100vh] w-full place-items-center rounded-lg p-6 lg:overflow-visible">
+        <LoadingSpinner />
+      </div>
+    );
   }
 
   if (!user) {
