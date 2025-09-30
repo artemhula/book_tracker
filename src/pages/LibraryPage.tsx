@@ -1,4 +1,4 @@
-import AnimatedBlobs from '../components/AnimatedBlobs';
+import { AnimatedBlobs } from '../components/AnimatedBlobs';
 import CardList from '../components/CardList';
 import Modal from '../components/Modal/Modal';
 import Notifier from '../components/Notifier';
@@ -21,12 +21,12 @@ export default function LibraryPage() {
 
       <main className="font-geist">
         <div className="container mx-auto relative w-full max-w-7xl">
-          <AnimatedBlobs />
           <CardList />
         </div>
       </main>
 
       <Modal />
+      <AnimatedBlobs />
 
       <Notifier />
     </>

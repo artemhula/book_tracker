@@ -4,6 +4,7 @@ import LoginRedirectPage from './pages/LoginRedirectPage';
 import LoginPage from './pages/LoginPage';
 import ProtectedLayout from './components/ProtectedLayout';
 import StatsPage from './pages/StatsPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
       <Route path="stats" element={<ProtectedLayout />}>
         <Route index element={<StatsPage />} />
       </Route>
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

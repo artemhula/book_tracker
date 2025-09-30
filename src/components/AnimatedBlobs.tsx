@@ -1,8 +1,16 @@
-export default function AnimatedBlobs() {
+import { memo } from 'react';
+
+export const AnimatedBlobs = memo(() => {
   return (
     <>
-      <div className="absolute top-0 -z-10 md:right-50  right-10 w-70 md:w-120 h-120 bg-red-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-      <div className="absolute top-0 -z-10 md:left-50 left-10 w-70 md:w-120 h-120 bg-yellow-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10">
+        <div
+          className="
+            w-32 h-60 md:w-60 bg-gradient-to-r from-orange-300 to-red-300 rounded-full animate-blob blur-[100px] 
+            md:blur-[140px] md:opacity-80
+          "
+        />
+      </div>
     </>
   );
-}
+});
