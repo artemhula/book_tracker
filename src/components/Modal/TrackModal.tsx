@@ -51,7 +51,7 @@ export default function TrackModal({ book }: ChangerProps) {
         src={book.coverUrl ?? noCover}
         alt={book.title}
       />
-      <div className="flex flex-col items-center justify-between ml-3 md:ml-6 min-w-0 flex-1">
+      <div className="flex flex-col items-center justify-evenly ml-3 md:ml-6 min-w-0 flex-1">
         <div className="w-full min-w-0">
           <p className="text-gray-900 font-semibold text-lg mb-1 text-center truncate ">
             {book.title}

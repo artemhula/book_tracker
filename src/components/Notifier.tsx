@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast, Toaster } from 'sonner';
-import { selectNotification } from '../redux/slices/notifierSlice';
+import { reset, selectNotification } from '../redux/slices/notifierSlice';
 
 export default function Notifier() {
   const notification = useSelector(selectNotification);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     switch (notification.type) {
       case 'Success':
@@ -17,6 +19,8 @@ export default function Notifier() {
         toast.error(notification.text);
         break;
     }
+
+    dispatch(reset());
   }, [notification]);
 
   return <Toaster richColors position="top-right" />;

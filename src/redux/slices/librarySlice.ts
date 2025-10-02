@@ -19,7 +19,9 @@ export const fetchBooks = createAsyncThunk(
   'library/fetchBooks',
   async (_, { rejectWithValue }) => {
     try {
-      const res = await apiFetch(`${import.meta.env.VITE_API_URL}/me/books`);
+      const res = await apiFetch(
+        `${import.meta.env.VITE_API_URL}/book?orderBy=currentPage`
+      );
       if (!res.ok) throw new Error('Cannot fetch books');
       return await res.json();
     } catch (err) {

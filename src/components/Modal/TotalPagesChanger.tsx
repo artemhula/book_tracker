@@ -24,12 +24,9 @@ export default function TotalPagesChanger({ book }: Props) {
     dispatch(changeTotalPages({ id: book.id!, totalPages: data.pages }));
 
   return (
-    <div className="font-geist mt-2 text-sm text-gray-800 text-center">
+    <div className="font-geist mt-2 text-sm text-gray-800 text-center flex flex-col items-center justify-between">
       We do not have information about the number of pages in this book.
-      <form
-        className="mt-3 flex items-center"
-        onSubmit={handleSubmit(handleTotalPagesChange)}
-      >
+      <form className="mt-3 " onSubmit={handleSubmit(handleTotalPagesChange)}>
         <div>
           {errors.pages ? (
             <div className="font-geist text-red-500">

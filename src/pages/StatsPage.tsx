@@ -64,7 +64,6 @@ export default function StatsPage() {
             </div>
           )
         ) : null}
-
         <AnimatedBlobs />
       </main>
     </>
