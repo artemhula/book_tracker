@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
+import type { Book } from '../../models/Book';
 
-export type Option = {
-  id: string;
-  title: string;
-  coverUrl?: string;
-};
+export type Option =
+  | {
+      id: string;
+      title: string;
+    }
+  | Book;
 
 type Props = {
   options: Option[];
@@ -46,7 +48,7 @@ export default function Selector({
                     selectedOption === option.id! ? 'bg-gray-100' : ''
                   }`}
                 >
-                  {option.coverUrl && (
+                  {'coverUrl' in option && option.coverUrl && (
                     <img
                       src={option.coverUrl}
                       alt="book cover"
