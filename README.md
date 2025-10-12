@@ -1,10 +1,6 @@
 # 📚 Book Tracker 📚
 
-<<<<<<< HEAD
-![video!!]
-=======
 https://github.com/user-attachments/assets/ea885368-655e-411b-a1c6-2df726a78fc4
->>>>>>> 304e673bb6bbe9e226b4cf774f5fb200099778d6
 
 A modern web app to manage your personal library, track reading progress, and visualize stats with charts.
 
